@@ -3,8 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 
 kids = [
-    {'name':'Julio', 'age': 2, 'nickname': 'Bud'},
-    {'name':'William', 'age': 4, 'nickname': 'Willy'}
+    {'name':'Julio', 'age': 2, 'nickname': 'Bud', 'description':"rascal"},
+    {'name':'William', 'age': 4, 'nickname': 'Willy', 'description':"chill"}
 ]
 
 def home(req):
