@@ -3,10 +3,6 @@
 
 <h1>kids List</h1>
 
-{% for kid in kids %}
-<!-- this href path is basically going into the urls.py and looking for a path that has the name 'detail' and 
-passing the value of the current kid that was passed as an argument -->
-<a href="{% url 'detail' kid.id %}">
   <div class="card">
     <div class="card-content">
       <span class="card-title">{{ kid.name }}</span>
@@ -19,7 +15,4 @@ passing the value of the current kid that was passed as an argument -->
       {% endif %}
     </div>
   </div>
-</a>
-{% endfor %}
-
 {% endblock %}
