@@ -1,8 +1,11 @@
 from django.db import models
 from django.urls import reverse
+# Whenever a new model is created, you should also add it to the admin.py
 # after creating or editing a model, you need to run the commands 'python3 manage.py makemigrations' and then
 # 'python3 manage.py migrate' to implement the changes
-
+MEALS = (
+    ('B','Breakfast'),('L','Lunch'), ('D', 'Dinner')
+)
 # Create your models here.
 
 class Kids(models.Model):
@@ -18,3 +21,18 @@ class Kids(models.Model):
         # you need to import reverse from jango /\/\
         # also to pass context to the page, you need to use kwargs(needs to be lowercase)
         return reverse('detail', kwargs ={'kid_id': self.id})
+
+class Feeding(models.Model):
+    date = models.DateField()
+    meal = models.CharField(
+        max_length=1,
+        choices = MEALS,
+        default=MEALS[0][0]
+        )
+    kid = models.ForeignKey(Kids, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"{self.get_meal_display()} on {self.date}"
+    
+    class META:
+        ordering = ['-date']
