@@ -20,6 +20,7 @@ def kids_index(req):
     kids = Kids.objects.all()
     return render(req,'kids/index.html',{'kids':kids})
 # the kid_id is defined on the urls.py path for kids_detail. similar to req.params and does not need a ','
+
 def kids_detail(req, kid_id):
     kid = Kids.objects.get(id=kid_id)
     return render(req,'kids/detail.html', {'kid': kid})

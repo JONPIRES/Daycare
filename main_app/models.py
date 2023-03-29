@@ -16,5 +16,5 @@ class Kids(models.Model):
 
     def get_absolute_url(self):
         # you need to import reverse from jango /\/\
-        # also to pass context to the page, you need to use Kwargs
-        return reverse('detail', Kwargs ={'cat_id': self.id})
+        # also to pass context to the page, you need to use kwargs(needs to be lowercase)
+        return reverse('detail', kwargs ={'kid_id': self.id})

@@ -14,5 +14,7 @@
         <p>infant</p>
       {% endif %}
     </div>
+    <a href="{% url 'kid_update' kid.id %}">Edit</a>
+    <a href="{% url 'kid_delete' kid.id %}">Delete</a>
   </div>
 {% endblock %}
