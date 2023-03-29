@@ -1,4 +1,6 @@
 from django.shortcuts import render
+# you need to implement the code below to be able to add the Class Based View(CBV)
+from django.views.generic.edit import CreateView, UpdateView, DeleteView 
 from .models import Kids
 
 # Create your views here.
@@ -21,3 +23,17 @@ def kids_index(req):
 def kids_detail(req, kid_id):
     kid = Kids.objects.get(id=kid_id)
     return render(req,'kids/detail.html', {'kid': kid})
+
+class KidCreate(CreateView):
+ #   this will add all the field in the cat model or you can create a list
+# to add only the keys you want in this model
+    model = Kids
+    fields = '__all__'
+
+class KidUpdate(UpdateView):
+    model = Kids
+    fields = ['description','nickname', 'age' ]
+
+class KidDelete(DeleteView):
+    model = Kids
+    success_url = '/kids'
