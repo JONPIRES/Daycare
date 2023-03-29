@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 # after creating or editing a model, you need to run the commands 'python3 manage.py makemigrations' and then
 # 'python3 manage.py migrate' to implement the changes
 
@@ -13,3 +14,7 @@ class Kids(models.Model):
     def __str__(self):
         return f'{self.name} ({self.id})'
 
+    def get_absolute_url(self):
+        # you need to import reverse from jango /\/\
+        # also to pass context to the page, you need to use Kwargs
+        return reverse('detail', Kwargs ={'cat_id': self.id})

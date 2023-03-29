@@ -19,21 +19,26 @@ def about(req):
 def kids_index(req):
     kids = Kids.objects.all()
     return render(req,'kids/index.html',{'kids':kids})
-# the kid_id is defined on the urls.py path for kids_detail. similar to req.params
+# the kid_id is defined on the urls.py path for kids_detail. similar to req.params and does not need a ','
 def kids_detail(req, kid_id):
     kid = Kids.objects.get(id=kid_id)
     return render(req,'kids/detail.html', {'kid': kid})
 
 class KidCreate(CreateView):
- #   this will add all the field in the cat model or you can create a list
-# to add only the keys you want in this model
+#this will add all the field in the cat model or you can create a list to add only the keys you want in this model
+# Also, insteade of redirecting the page from here, we can use a dunder method inside the class model(Kids) the get_absolute_url
     model = Kids
     fields = '__all__'
 
 class KidUpdate(UpdateView):
+    # for this CBV to be accessed it needs to in a folder with the same name as your app, inside templates
+    # in this case is templates/main_app, and have a file with the name model_form.html, in this case (kids_form.html)
     model = Kids
     fields = ['description','nickname', 'age' ]
 
 class KidDelete(DeleteView):
+# the same file, as the above example, needs to be created for the delete CBV but with the name 'model_confirm_delete.html', because the delete button on the detail.html is only a 
+# get request, so it needs a file to render the form. but if i wanted to make the delete button functional, 
+# I would need to wrap the button in a form directly.
     model = Kids
     success_url = '/kids'
