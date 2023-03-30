@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 # you need to implement the code below to be able to add the Class Based View(CBV)
 from django.views.generic.edit import CreateView, UpdateView, DeleteView 
-from .models import Kids
+from .models import Kids, Feeding
+from .forms import FeedingForm
+
 
 # Create your views here.
 
@@ -23,7 +25,10 @@ def kids_index(req):
 
 def kids_detail(req, kid_id):
     kid = Kids.objects.get(id=kid_id)
-    return render(req,'kids/detail.html', {'kid': kid})
+    feeding_form = FeedingForm()
+    return render(req,'kids/detail.html', {
+        'kid': kid, 'feeding_form': feeding_form
+        })
 
 class KidCreate(CreateView):
 #this will add all the field in the cat model or you can create a list to add only the keys you want in this model
@@ -43,3 +48,16 @@ class KidDelete(DeleteView):
 # I would need to wrap the button in a form directly.
     model = Kids
     success_url = '/kids'
+
+def add_feeding(req, kid_id):
+    # req.POST is like the req.body in express. it gives you wtv is in the form from the post method
+    form = FeedingForm(req.POST)
+    if form.is_valid():
+        # in this case, I can't save automatically, because the req.POST that is comming in, does not have a kid_id yet. because in the forms.py I only pass, date and meal.
+        # so I add 'commit=False' to save so it doesn't commit to the DB, and then I add the kid_id to the object before saving.
+        new_feeding=form.save(commit=False)
+        new_feeding.kid_id = kid_id
+        new_feeding.save()
+        # redirect works simmilar to express, but you don't need {} to pass arguments.
+        return redirect('detail', kid_id=kid_id)
+

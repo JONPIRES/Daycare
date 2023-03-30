@@ -23,7 +23,7 @@ class Kids(models.Model):
         return reverse('detail', kwargs ={'kid_id': self.id})
 
 class Feeding(models.Model):
-    date = models.DateField()
+    date = models.DateField('feeding date')
     meal = models.CharField(
         max_length=1,
         choices = MEALS,
@@ -34,5 +34,6 @@ class Feeding(models.Model):
     def __str__(self):
         return f"{self.get_meal_display()} on {self.date}"
     
+    # over here I can set the order in whick I display the feedings, based on the date or which ever key I want.
     class META:
         ordering = ['-date']
