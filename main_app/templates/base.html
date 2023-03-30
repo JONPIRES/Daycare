@@ -21,9 +21,11 @@
           <li><a href="/" class="left brand-logo">&nbsp;&nbsp;Daycare</li>
         </ul>
         <ul class="right">
-          <li><a href="/about">About</a></li>
-          <li><a href="{% url 'kid_create'%}">Add a Kid</a></li>
-          <li><a href="/kids">All kids</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'toys_create' %}">Add Toy</a></li>
+          <li><a href="{% url 'toys_index' %}">View Toys</a></li>
+          <li><a href="{% url 'kid_create' %}">Add a Kid</a></li>
+          <li><a href="{% url 'index' %}">All kids</a></li>
         </ul>
       </div>
     </nav>

@@ -26,9 +26,11 @@ def kids_index(req):
 
 def kids_detail(req, kid_id):
     kid = Kids.objects.get(id=kid_id)
+    id_list= kid.toys.all().values_list('id')
+    no_toys = Toy.objects.exclude(id__in=id_list)
     feeding_form = FeedingForm()
     return render(req,'kids/detail.html', {
-        'kid': kid, 'feeding_form': feeding_form
+        'kid': kid, 'feeding_form': feeding_form, 'toys': no_toys
         })
 
 class KidCreate(CreateView):
@@ -61,6 +63,34 @@ def add_feeding(req, kid_id):
         new_feeding.save()
         # redirect works simmilar to express, but you don't need {} to pass arguments.
         return redirect('detail', kid_id=kid_id)
+    
+class FeedingDelete(DeleteView):
+    model = Feeding
+    success_url = '/kids'    
 
 class ToyList(ListView):
     model = Toy
+
+class ToyDetail(DetailView):
+    model=Toy
+
+class ToyCreate(CreateView):
+    model=Toy
+    fields='__all__'
+
+class ToyUpdate(UpdateView):
+    model=Toy
+    fields='__all__'
+
+class ToyDelete(DeleteView):
+    model=Toy
+    success_url='/toys'
+
+def assoc_toy(request, kid_id, toy_id):
+  Kids.objects.get(id=kid_id).toys.add(toy_id)
+  return redirect('detail', kid_id=kid_id)
+
+
+def remove_toy(request, kid_id, toy_id):
+  Kids.objects.get(id=kid_id).toys.remove(toy_id)
+  return redirect('detail', kid_id=kid_id)
