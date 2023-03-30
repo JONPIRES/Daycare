@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 # you need to implement the code below to be able to add the Class Based View(CBV)
-from django.views.generic.edit import CreateView, UpdateView, DeleteView 
-from .models import Kids, Feeding
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView 
+from .models import *
 from .forms import FeedingForm
 
 
@@ -61,3 +62,5 @@ def add_feeding(req, kid_id):
         # redirect works simmilar to express, but you don't need {} to pass arguments.
         return redirect('detail', kid_id=kid_id)
 
+class ToyList(ListView):
+    model = Toy

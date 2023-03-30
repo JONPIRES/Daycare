@@ -7,6 +7,22 @@ MEALS = (
     ('B','Breakfast'),('L','Lunch'), ('D', 'Dinner')
 )
 # Create your models here.
+SIZES = (
+    ('S','Small'),('M','Medium'), ('L', 'Large')
+)
+class Toy(models.Model):
+    name:models.CharField(max_length=50)
+    size = models.CharField(
+        max_length=1,
+        choices = SIZES,
+        default=SIZES[0][0]
+        )
+    color:models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.name
+    
+
 
 class Kids(models.Model):
     name = models.CharField(max_length=100)
